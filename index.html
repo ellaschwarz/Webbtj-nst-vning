@@ -5,15 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
 </head>
 <body>
+    <div id=container>
+
+    </div>
     
-    <form action="post">
-        <input type="text"> Title  </input> 
-        <input type="text"> Content  </input> 
-        <button type="submit">Submit</button>
+    <form>
+        <input id="title" type="text"> Title  </input> 
+        <input id="content" type="text"> Content  </input> 
+        <button id='post'>Submit</button>
     </form>
 
-    <script src="app.js"></script>
+    <script type="text/javascript" src="public/app.js"></script>
+    <script type="text/javascript" src="public/main.js"></script>
+
+    <!-- <script>
+        $(function() {
+            let res = findAll()
+            $('#container').text(res)
+        })
+
+        $(document).on("click", "#post", function (data, status) {
+            let title = $('#title').val()
+            let content = $('#content').val()
+
+            post(title, content)
+        })
+
+    </script> -->
+    
 </body>
 </html>

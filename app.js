@@ -1,7 +1,11 @@
 const dataStore = require('nedb')
+const bodyParser = require("body-parser");
 const express = require('express')
-const app = express()
+const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'))
+var db = {}
 var db = {}
 db.posts = new dataStore({
     autoload: true
@@ -16,10 +20,21 @@ function post(title, content) {
     })
 }
 
+function findAll() {
+    db.posts.find({}, function (err, doc) {
+        return doc
+    })
+}
 
+app.post('/post', (req, res) => {
+    let title = req.params.title;
+    let content = req.params.content;
+
+    post(title, content)
+})
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: __dirname})
+    res.sendFile('/index.html', {root: __dirname})
 })
 
 app.listen(3000, () => {
