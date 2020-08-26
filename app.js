@@ -26,6 +26,9 @@ Lägg tillbaks detta snart
 const userRoutes = require('./routes/user-routes.js');
 app.use(userRoutes);
 
+const commentsRoutes = require('./routes/comments-route.js');
+app.use(commentsRoutes);
+
 app.listen(3000, () => {
     console.log('Server started on port 3000')
 })

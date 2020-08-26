@@ -21,8 +21,10 @@ module.exports = {
         return new Promise ( (resolve, reject) => {
             db.posts.findOne({_id: id}, {}, (err, docs ) => {
                 if (err) {
+                    console.log(err);
                     reject (err);
                 } else {
+                    console.log(docs)
                     resolve(docs);
                 }
             });
@@ -41,8 +43,9 @@ module.exports = {
     },
     async updatePost(id, postData) {
         return new Promise ( (resolve, reject) => {
-            db.posts.update({_id: id}, postData, {},(err, updatedPost ) => {
+            db.posts.update({_id: id}, {$set: postData}, {},(err, updatedPost ) => {
                 if (err) {
+                    console.log(err);
                     reject (err);
                 } else {
                     resolve(updatedPost);
@@ -60,39 +63,5 @@ module.exports = {
                 }
             });
         });
-    },
-    async createComment(postId, commentData) {
-        return new Promise ( (resolve, reject) => {
-            db.posts.update({_id: postId}, {$push: {comments: commentData} }, {},(err, newComment ) => {
-                if (err) {
-                    reject (err);
-                } else {
-                    resolve(newComment);
-                }
-            });
-        });
-    },
-    async findComments(postId) {
-        return new Promise ( (resolve, reject) => {
-            db.posts.findOne({_id: postId}, (err, docs ) => {
-                if (err) {
-                    reject (err);
-                } else {
-                    resolve(docs.comments);
-                }
-            });
-        });
-    },
-    async findOneComment(commentId) {
-        return new Promise ( (resolve, reject) => {
-            //Super bra och granska ej kod här nere
-            db.posts.findOne({"comments.comment_id": commentId}, (err, docs ) => {
-                if (err) {
-                    reject (err);
-                } else {
-                    resolve(docs.comments[0]);
-                }
-            });
-        });
-    },  
+    } 
 };

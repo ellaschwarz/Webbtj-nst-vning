@@ -7,12 +7,18 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const secret = "carola";
 
-const authorizeUser = async (req, res) => {
+const authorizeUser = async (req, res, next) => {
     if(!req.headers.authorization) return res.sendStatus(403)
     const token = req.headers.authorization.replace("Bearer ", "");
     try {
         const payload = jwt.verify(token, secret);
-        res.status(200).send(payload);
+        req.user = {...payload,
+            owns(document) {
+            return this._id == document.author_id;
+        }};
+        
+        next()
+        //res.status(200).send(payload);
     } catch (error) {
         res.sendStatus(403);
     }
@@ -22,7 +28,11 @@ const userLogin = async (req, res) => {
     try {
         const {username, password} = req.body;
         const user = await loginUser(username, password);
-        const token = jwt.sign({username: user.username}, secret, {expiresIn: "30s"} )
+            const payload = {
+                ...user,
+            };
+
+        const token = jwt.sign(payload, secret, {expiresIn: "1h"} )
         console.log(token);
         res.status(200).send(token);
     } catch (err) {
