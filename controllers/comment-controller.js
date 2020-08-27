@@ -8,15 +8,18 @@ const {
 
 const createNewComment = async (req, res) => {
   let id = req.body.id;
+  console.log('Hello entering')
   let commentData = {
     author_id: req.user._id,
     comment: req.body.comment,
-    post_id: req.body.postId,
+    post_id: req.body.post_id,
   };
   try {
-    const post = await createComment(id, commentData);
-    res.sendStatus(200).send(post);
+    const comment = await createComment(id, commentData);
+    console.log(comment);
+    res.status(200).send(comment);
   } catch (err) {
+    console.log(err);
     res.status(404).send(err);
   }
 };
@@ -61,7 +64,9 @@ const updateNewComment = async (req, res) => {
 const deleteOneComment = async (req, res) => {
   try {
     const comment = await findOneComment(req.params.id);
-    if (req.user.own(comment)) {
+    console.log(comment);
+    if (req.user.owns(comment)) {
+      console.log('IF-SATS')
       const deletedComment = await deleteComment(req.params.id);
       res.sendStatus(200).send(deletedComment);
     } else {

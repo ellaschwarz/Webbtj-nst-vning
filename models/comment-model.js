@@ -9,7 +9,7 @@ module.exports = {
 
 async createComment(postId, commentData) {
     return new Promise ( (resolve, reject) => {
-        db.comments.update({_id: postId}, {$push: {comments: commentData} }, {},(err, newComment ) => {
+        db.comments.insert(commentData, (err, newComment ) => {
             if (err) {
                 reject (err);
             } else {
@@ -31,7 +31,6 @@ async findComments(postId) {
 },
 async findOneComment(commentId) {
     return new Promise ( (resolve, reject) => {
-        //Super bra och granska ej kod här nere
         db.comments.findOne({_id: commentId}, (err, docs ) => {
             if (err) {
                 reject (err);

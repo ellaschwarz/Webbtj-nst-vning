@@ -12,6 +12,8 @@ db.comments = new dataBase({
 })
 */
 
+require('dotenv').config();
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
